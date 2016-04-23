@@ -1,0 +1,21 @@
+#map {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.info-panel {
+    color: azure;
+    font-size: 3pc;
+}
+
+.panel-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.info-panel {
+    align-self: center;
+}
