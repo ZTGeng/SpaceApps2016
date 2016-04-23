@@ -1,4 +1,25 @@
-function main() {
+var defaultZoom = 13;
+
+function getGeoLocation() {
+    var lat, lng;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+            console.log("lat lng: " + lat + " " + lng);
+            creatMap(lat, lng);
+        });
+        
+    } else {
+        lat = 37.78684346730307;
+        lng = -122.40559101104735;
+        console.log("Use default location (SF)");
+        // TODO use IP get location
+        creatMap(lat, lng);
+    }
+};
+
+function creatMap(lat, lng) {
     // Get the user's API key via prompt
     if (!localStorage.getItem('uc_api_key') || localStorage.getItem('uc_api_key') == "null") {
         localStorage.setItem(
@@ -17,11 +38,15 @@ function main() {
     var apiKey = localStorage.getItem('uc_api_key'),
         apiSecret = localStorage.getItem('uc_api_secret');
 
+    // if (!lat || !lng) {
+    //     lat = 37.78684346730307,
+    //     lng = -122.40559101104735;
+    // }
     // Create a Leaflet map
     var map = L.map('map').setView([
-        37.78684346730307,
-        -122.40559101104735
-    ], 9);
+        lat,
+        lng
+    ], defaultZoom);
 
     // Create a simple UC tile layer - global map, no restrictions
     var url = `https://tile-{s}.urthecast.com/v1/rgb/{z}/{x}/{y}?api_key=${apiKey}&api_secret=${apiSecret}`;
@@ -29,10 +54,22 @@ function main() {
     // Append it to the map
     var ucTiles = L.tileLayer(url).addTo(map);
     
+    L.marker([lat, lng]).addTo(map);
+    
     map.on('click', function(e) {
-        console.log(e.latlng);
-        console.log(e);
+        // console.log(e.latlng);
+        // console.log(e);
+        // var point = e.containerPoint;
+        var popup = L.popup()
+            .setLatLng(e.latlng)
+            .setContent("<h2>You clicked the map at " + e.latlng.toString() + "</h2>")
+            .openOn(map);
     });
-}
+};
+
+// var popuptemplate = 
+function main() {
+    getGeoLocation();
+};
 
 $('document').ready(main);
