@@ -7,6 +7,15 @@ var _showError = function(req, res, statusCode) {
 };
 
 var sendJsonResponse = function(res, status, content) {
+  // var returnData = {};
+  // returnData.city = 'DummyCityNotFinished';
+  // returnData.summary =
+  var returnData = {
+    city: 'Dummy',
+    summary: content.currently.summary,
+    temperature: content.currently.temperature,
+    daySummary: content.currently.daily.data[0]
+  };
   res.status(status);
   res.json(content);
 };
