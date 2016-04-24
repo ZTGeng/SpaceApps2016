@@ -1,5 +1,6 @@
 var api_key = 'caa5d242d66d754614d1f5d60424bb81';
 var Request = require('request');
+var locationDataCache = {};
 // var Stringify = require('json-stringify-safe');
 
 var _showError = function(req, res, statusCode) {
@@ -68,13 +69,25 @@ function processData(data) {
 }
 
 module.exports.getWeatherDataByGeo = function(req, res, next) {
+  var lng = req.query.lng;
+  var lat = req.query.lat;
+  var latlngStr = (+lat).toFixed(3) + (+lng).toFixed(3);
   getWeatherDataFromOutApi(req, res, function(req, res, weatherData) {
-    getLocationInfoFromOutApi(req, res, function(req, res, locationData) {
+    if (locationDataCache[latlngStr]) {
       var returnData = processData({
-        weatherData: weatherData,
-        locationData: locationData
+          weatherData: weatherData,
+          locationData: locationDataCache[latlngStr]
       });
       sendJsonResponse(res, 200, returnData);
-    });
+    } else {
+      getLocationInfoFromOutApi(req, res, function(req, res, locationData) {
+        var returnData = processData({
+          weatherData: weatherData,
+          locationData: locationData
+        });
+        locationDataCache[latlngStr] = locationData;
+        sendJsonResponse(res, 200, returnData);
+      });
+    }
   });
 };
