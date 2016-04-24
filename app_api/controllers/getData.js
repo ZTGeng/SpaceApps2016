@@ -39,7 +39,6 @@ function getLocationInfoFromOutApi(req, res, callback) {
   Request(requestOptions, function(err, response, body) {
     if (response.statusCode === 200) {
       var data = JSON.parse(body);
-      console.log(data);
       callback(req, res, data);
     } else {
       _showError(req, res, response.statusCode);

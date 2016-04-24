@@ -2,29 +2,33 @@
     'use strict';
     // Get the user's API key via prompt
     if (!localStorage.getItem('uc_api_key') || localStorage.getItem('uc_api_key') == "null") {
-        localStorage.setItem('uc_api_key', "357C908148B64CD19F08");
+      localStorage.setItem('uc_api_key', "357C908148B64CD19F08");
     }
     // Get the user's API secret via prompt
     if (!localStorage.getItem('uc_api_secret') || localStorage.getItem('uc_api_secret') == "null") {
-        localStorage.setItem('uc_api_secret', "0E6932BAC9A84E068B9A66DA4C8F3D53");
+      localStorage.setItem('uc_api_secret', "0E6932BAC9A84E068B9A66DA4C8F3D53");
     }
     var defaultZoom = 16,
         googleLayers = {
           streets: L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-              maxZoom: 20,
-              subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            maxZoom: 20,
+            minZoom: 10,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           }),
           hybrid: L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-              maxZoom: 20,
-              subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            maxZoom: 20,
+            minZoom: 10,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           }),
           datellite: L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-              maxZoom: 20,
-              subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            maxZoom: 20,
+            minZoom: 10,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           }),
           terrain: L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
-              maxZoom: 20,
-              subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            maxZoom: 20,
+            minZoom: 10,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           })
         },
     // Confirm we've got 'em by displaying them to the screen
@@ -37,18 +41,18 @@
     function start() {
         var lat, lng;
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                lat = position.coords.latitude;
-                lng = position.coords.longitude;
-                console.log("lat lng: " + lat + " " + lng);
-                creatMap(lat, lng);
-            });
-        } else {
-            lat = 37.78684346730307;
-            lng = -122.40559101104735;
-            console.log("Use default location (SF)");
-            // TODO use IP get location
+          navigator.geolocation.getCurrentPosition(function (position) {
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+            console.log("lat lng: " + lat + " " + lng);
             creatMap(lat, lng);
+          });
+        } else {
+          lat = 37.78684346730307;
+          lng = -122.40559101104735;
+          console.log("Use default location (SF)");
+          // TODO use IP get location
+          creatMap(lat, lng);
         }
     }
 
@@ -57,13 +61,12 @@
       // changeLayer(googleHybrid)();
       map.addLayer(googleLayers.hybrid);
       currentLayer = 'hybrid';
-      L.marker([lat, lng])
-          .addTo(map);
+      L.marker([lat, lng]).addTo(map);
       map.on('click', function (e) {
         var latlng = e.latlng;
         $.ajax({
           method: 'GET',
-        url: '/api/getData?lat=' + latlng.lat + '&lng=' + latlng.lng
+          url: '/api/getData?lat=' + latlng.lat + '&lng=' + latlng.lng
         })
         .done(function (data) {
           console.log(data);
