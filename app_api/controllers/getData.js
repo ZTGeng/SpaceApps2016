@@ -14,10 +14,10 @@ var sendJsonResponse = function(res, status, content) {
     city: 'Dummy',
     summary: content.currently.summary,
     temperature: content.currently.temperature,
-    daySummary: content.currently.daily.data[0]
+    daySummary: content.daily.data[0]
   };
   res.status(status);
-  res.json(content);
+  res.json(returnData);
 };
 
 function getDataFromOutApi(req, res, callback) {
@@ -25,8 +25,9 @@ function getDataFromOutApi(req, res, callback) {
   var lng = req.query.lng;
   var lat = req.query.lat;
 
-  requestOptions.url = 'https://api.forecast.io/forecast/' + api_key + '/' + lng + ',' + lat;
+  requestOptions.url = 'https://api.forecast.io/forecast/' + api_key + '/' + lat + ',' + lng;
   requestOptions.method = 'GET';
+  console.log(requestOptions);
   Request(requestOptions, function(err, response, body) {
     if (response.statusCode === 200) {
       var data = JSON.parse(body);
@@ -37,12 +38,8 @@ function getDataFromOutApi(req, res, callback) {
   });
 }
 
-function sendJsonResponse(res, status, content) {
-  res.status(status);
-  res.json(content);
-}
-
 module.exports.getWeatherDataByGeo = function(req, res, next) {
+  console.log("api call");
   getDataFromOutApi(req, res, function(req, res, responseData) {
     sendJsonResponse(res, 200, responseData);
   });

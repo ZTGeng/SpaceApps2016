@@ -9,7 +9,7 @@ function getGeoLocation() {
             console.log("lat lng: " + lat + " " + lng);
             creatMap(lat, lng);
         });
-        
+
     } else {
         lat = 37.78684346730307;
         lng = -122.40559101104735;
@@ -53,25 +53,25 @@ function creatMap(lat, lng) {
 
     // Append it to the map
     var ucTiles = L.tileLayer(url).addTo(map);
-    
+
     L.marker([lat, lng]).addTo(map);
-    
+
     map.on('click', function(e) {
         // console.log(e.latlng);
         // console.log(e);
         // var point = e.containerPoint;
-        getWeatherData(lat, lng, this);
+        getWeatherData(lat, lng, this, e);
     });
 };
 
-function getWeatherData(lat, lng, map) {
+function getWeatherData(lat, lng, map, e) {
     console.log("eqwewq");
     $.ajax({
         method: 'GET',
         url: '/api/getData?lat=' + lat + '&lng=' + lng
-    }).done(function(data) {
+    }).done(function(data, e) {
             console.log("aasdad");
-            var popupTemplate = pop1 + data.city + pop2 + data.summary + pop3 + data.temperature + pop4 + 
+            var popupTemplate = pop1 + data.city + pop2 + data.summary + pop3 + data.temperature + pop4 +
                                 data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
             var popup = L.popup()
                 .setLatLng(e.latlng)
