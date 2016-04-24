@@ -59,28 +59,22 @@ function creatMap(lat, lng) {
     map.on('click', function(e) {
         // console.log(e.latlng);
         // console.log(e);
-        // var point = e.containerPoint;
-        console.log(this);
-        getWeatherData(e, this);
-    });
-};
-
-function getWeatherData(e, map) {
-    
-    $.ajax({
-        method: 'GET',
-        url: '/api/getData?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng
-    }).done(function(data, e) {
-        console.log(e);
+        var latlng = e.latlng;
+        $.ajax({
+            method: 'GET',
+            url: '/api/getData?lat=' + latlng.lat + '&lng=' + latlng.lng
+        }).done(function(data) {
+            // console.log(data);
             var popupTemplate = pop1 + data.city + pop2 + data.summary + pop3 + data.temperature + pop4 +
                                 data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
-            console.log(popupTemplate);
+            // console.log(popupTemplate);
             var popup = L.popup()
-                .setLatLng(e.latlng)
+                .setLatLng(latlng)
                 .setContent(popupTemplate)
                 .openOn(map);
         });
-}
+    });
+};
 
 var pop1 = '<div><strong>City: </strong><span>';
 var pop2 = '</span><br><strong>Weather: </strong><span>';
