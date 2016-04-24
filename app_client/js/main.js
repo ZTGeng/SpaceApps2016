@@ -64,8 +64,8 @@
         function changeLayer(layer) {
             return function() {
                 for (var l in googleLayers) {
-                    if (map.hasLayer(googleLayers.l)) {
-                        map.removeLayer(googleLayers.l);
+                    if (map.hasLayer(googleLayers[l])) {
+                        map.removeLayer(googleLayers[l]);
                     }
                 }
                 layer.addTo(map);
