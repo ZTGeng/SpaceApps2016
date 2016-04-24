@@ -1,5 +1,5 @@
 body {
-  font-family: Roboto, serif;
+  font-family: Roboto, serif !important;
 }
 
 .wrapper {
@@ -59,7 +59,51 @@ body {
 .click-info-container {
   position: relative;
 }
-.animation {
+.leaflet-popup-content-wrapper {
+  border-radius: 4px;
+  min-width: 300px;
+}
+.leaflet-popup-content {
+  font-size: 18px;
+}
+.click-info-container {
+  position: relative;
+}
+.click-info-container .animation {
   position: absolute;
-  
+  height: 100px;
+  top: -100px;
+  left: -45px;
+  width: 350px;
+}
+.click-info-container .info {
+  font-size: 16px;
+  margin-top: 100px;
+}
+.info-current-temperature {
+  font-size: 2.0em;
+  float: right;
+}
+.info-summary, .info-location {
+  font-size: 1.0em;
+  clear: left;
+  text-align: left;
+  line-height: 120%;
+}
+.info hr {
+  margin: 5px 0;
+}
+.info-dl {
+  font-size: 0.8em;
+  margin-bottom: 0;
+}
+.info dt {
+  width: 50%;
+  text-align: left;
+}
+.info dd {
+  margin-left: 22%;
+}
+.info .day-summary {
+  font-size: 0.8em;
 }
