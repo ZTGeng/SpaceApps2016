@@ -58,7 +58,7 @@
       maxZoom: 20,
       subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     });
-    googleSat.addTo(map);
+    googleHybrid.addTo(map);
     L.marker([lat, lng])
       .addTo(map);
     map.on('click', function(e) {
