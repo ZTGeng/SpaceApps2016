@@ -16,6 +16,7 @@ body {
     position: fixed;
     top: 100%;
     width: 100%;
+    z-index: 999;
 }
 .layer-switcher {
     top: -50px;
@@ -30,6 +31,7 @@ body {
   position: fixed;
   text-align: right;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 .location-info-container span {
   display: block;
@@ -52,4 +54,12 @@ body {
 
 .leaflet-bottom {
     display: none;
+}
+
+.click-info-container {
+  position: relative;
+}
+.animation {
+  position: absolute;
+  
 }
