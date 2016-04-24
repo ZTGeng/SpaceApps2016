@@ -1,4 +1,4 @@
-(function ($, L) {
+(function ($, L, animations) {
     'use strict';
     // Get the user's API key via prompt
     if (!localStorage.getItem('uc_api_key') || localStorage.getItem('uc_api_key') == "null") {
@@ -68,7 +68,7 @@
         var latlng = e.latlng;
         getWeatherDataBy(latlng.lat, latlng.lng, function(data) {
           console.log(data);
-          var pop1 = '<div><strong>City: </strong><span>';
+          var pop1 = '<div class="click-info-container"><div class="animation"></div><strong>City: </strong><span>';
           var pop15= '</span><br><strong>Neighborhood: </strong><span>';
           var pop2 = '</span><br><strong>Weather: </strong><span>';
           var pop3 = '</span><br><strong>Tempurature: </strong><span>';
@@ -78,6 +78,7 @@
           var popupTemplate = pop1 + (data.city || 'Unknown') + pop15 + (data.neighborhood || 'Unkown') + pop2 + data.summary + pop3 + data.temperature + pop4 + data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
                 // console.log(popupTemplate);
           var popup = L.popup().setLatLng(latlng).setContent(popupTemplate).openOn(map);
+          animations.partlyCloudy();
         });
       });
     }
@@ -103,7 +104,7 @@
         var $locationTemperature = $('.location-temperature'),
             $weatherSummary = $('.weather-summary'),
             $location = $('.location'),
-            unitStr = (unit === 'american') ? '°F' : '°C';
+            unitStr = (unit === 'american') ? '&deg;F' : '&deg;C';
 
         $locationTemperature.html(parseInt(data.temperature) + ' ' + unitStr);
         $weatherSummary.html(data.summary);
@@ -119,4 +120,4 @@
     });
     
     $('document').ready(start());
-} ($, L));
+} ($, L, new Animations()));
