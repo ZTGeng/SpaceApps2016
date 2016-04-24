@@ -49,7 +49,7 @@ function creatMap(lat, lng) {
     ], defaultZoom);
 
     // Create a simple UC tile layer - global map, no restrictions
-    var url = 'https://tile-{s}.urthecast.com/v1/rgb/{z}/{x}/{y}?api_key=${' + apiKey + '}&api_secret=${' + apiSecret + '}';
+    var url = 'https://tile-{s}.urthecast.com/v1/rgb/{z}/{x}/{y}?api_key=' + apiKey + '&api_secret=' + apiSecret;
 
     // Append it to the map
     var ucTiles = L.tileLayer(url).addTo(map);
@@ -60,29 +60,32 @@ function creatMap(lat, lng) {
         // console.log(e.latlng);
         // console.log(e);
         // var point = e.containerPoint;
-        weatherPopup(lat, lng, this);
+        getWeatherData(lat, lng, this);
     });
 };
 
 function getWeatherData(lat, lng, map) {
+    console.log("eqwewq");
     $.ajax({
         method: 'GET',
-        url: '/api/getData?lat=' + lat + '&lng=' + lng,
-        success: function(data) {
-            var popupTemplate = pop1 + data.city + pop2 + data.summary + pop3 + data.max + pop4 + data.min + pop5;
+        url: '/api/getData?lat=' + lat + '&lng=' + lng
+    }).done(function(data) {
+            console.log("aasdad");
+            var popupTemplate = pop1 + data.city + pop2 + data.summary + pop3 + data.temperature + pop4 + 
+                                data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
             var popup = L.popup()
                 .setLatLng(e.latlng)
                 .setContent(popupTemplate)
                 .openOn(map);
-        }
-    });
+        });
 }
 
 var pop1 = '<div><strong>City: </strong><span>';
 var pop2 = '</span><br><strong>Weather: </strong><span>';
-var pop3 = '</span><br><strong>Max Temp: </strong><span>';
-var pop4 = '</span><br><strong>Min Temp: </strong><span>';
-var pop5 = '</span></div>';
+var pop3 = '</span><br><strong>Tempurature: </strong><span>';
+var pop4 = '</span><br><strong>Max Temp: </strong><span>';
+var pop5 = '</span><br><strong>Min Temp: </strong><span>';
+var pop6 = '</span></div>';
 
 function main() {
     getGeoLocation();
