@@ -66,14 +66,15 @@
         url: '/api/getData?lat=' + latlng.lat + '&lng=' + latlng.lng
         })
         .done(function (data) {
-          // console.log(data);
+          console.log(data);
           var pop1 = '<div><strong>City: </strong><span>';
+          var pop15= '</span><br><strong>Neighborhood: </strong><span>';
           var pop2 = '</span><br><strong>Weather: </strong><span>';
           var pop3 = '</span><br><strong>Tempurature: </strong><span>';
           var pop4 = '</span><br><strong>Max Temp: </strong><span>';
           var pop5 = '</span><br><strong>Min Temp: </strong><span>';
           var pop6 = '</span></div>';
-          var popupTemplate = pop1 + data.city + pop2 + data.summary + pop3 + data.temperature + pop4 + data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
+          var popupTemplate = pop1 + data.city + pop15 + data.neighborhood + pop2 + data.summary + pop3 + data.temperature + pop4 + data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
                 // console.log(popupTemplate);
           var popup = L.popup().setLatLng(latlng).setContent(popupTemplate).openOn(map);
         });
