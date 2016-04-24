@@ -20,7 +20,7 @@
             minZoom: 10,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           }),
-          datellite: L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+          satellite: L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
             maxZoom: 20,
             minZoom: 10,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
@@ -31,10 +31,11 @@
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           })
         },
-    // Confirm we've got 'em by displaying them to the screen
+        // Confirm we've got 'em by displaying them to the screen
         apiKey = localStorage.getItem('uc_api_key'),
         apiSecret = localStorage.getItem('uc_api_secret'),
         map, currentLayer,
+        unit = 'american',
         $layerSwitcher = $('.layer-switcher');
 
 
@@ -46,6 +47,7 @@
             lng = position.coords.longitude;
             console.log("lat lng: " + lat + " " + lng);
             creatMap(lat, lng);
+            getDataForCurrentGeolocation(lat, lng);
           });
         } else {
           lat = 37.78684346730307;
@@ -64,11 +66,7 @@
       L.marker([lat, lng]).addTo(map);
       map.on('click', function (e) {
         var latlng = e.latlng;
-        $.ajax({
-          method: 'GET',
-          url: '/api/getData?lat=' + latlng.lat + '&lng=' + latlng.lng
-        })
-        .done(function (data) {
+        getWeatherDataBy(latlng.lat, latlng.lng, function(data) {
           console.log(data);
           var pop1 = '<div><strong>City: </strong><span>';
           var pop15= '</span><br><strong>Neighborhood: </strong><span>';
@@ -85,17 +83,32 @@
     }
 
     function changeLayer(layer) {
-        // return function() {
-        //     for (var l in googleLayers) {
-        //         if (map.hasLayer(googleLayers[l])) {
-        //             map.removeLayer(googleLayers[l]);
-        //         }
-        //     }
-        //     layer.addTo(map);
-        // };
       map.removeLayer(googleLayers[currentLayer]);
       map.addLayer(googleLayers[layer]);
       currentLayer = layer;
+    }
+
+    function getWeatherDataBy(lat, lng, callback) {
+      $.ajax({
+        method: 'GET',
+        url: '/api/getData?lat=' + lat + '&lng=' + lng
+      })
+      .done(function (data) {
+        callback(data);
+      });
+    }
+
+    function getDataForCurrentGeolocation(lat, lng) {
+      getWeatherDataBy(lat, lng, function(data) {
+        var $locationTemperature = $('.location-temperature'),
+            $weatherSummary = $('.weather-summary'),
+            $location = $('.location'),
+            unitStr = (unit === 'american') ? '°F' : '°C';
+
+        $locationTemperature.html(parseInt(data.temperature) + ' ' + unitStr);
+        $weatherSummary.html(data.summary);
+        $location.html(data.neighborhood + ', ' + data.city);
+      });
     }
 
     $layerSwitcher.on('click', function(e) {
@@ -104,10 +117,6 @@
       $target.addClass('btn-info');
       changeLayer($target.data('layer'));
     });
-    // $('#streets-btn').on('click', changeLayer(googleLayers.googleStreets));
-    // $('#hybrid-btn').on('click', changeLayer(googleLayers.googleHybrid));
-    // $('#sat-btn').on('click', changeLayer(googleLayers.googleSat));
-    // $('#terrain-btn').on('click', changeLayer(googleLayers.googleTerrain));
-
+    
     $('document').ready(start());
 } ($, L));

@@ -1,41 +1,33 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Weather App</title>
-
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-
-
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,300" rel="stylesheet" type="text/css">
 </head>
+
 <body>
     <div class="container-fluid wrapper">
-        <div id="map" class="">
-        </div>
-        <div class="panel-container">
+        <div id="map" class=""></div>
+        <div class="layer-switcher-container">
             <div class="layer-switcher btn-group">
                 <button class="btn btn-primary" data-layer="streets">Streets</button>
                 <button class="btn btn-primary btn-info" data-layer="hybrid">Hybrid</button>
-                <button class="btn btn-primary" data-layer="datellite">Satellite</button>
+                <button class="btn btn-primary" data-layer="satellite">Satellite</button>
                 <button class="btn btn-primary" data-layer="terrain">Terrain</button>
             </div>
         </div>
-        <div class="panel-container">
-            <div class="info-panel">
-                <div class="info-text">
-                    <strong>Your Location: </strong><span id="current-location">City Name</span><br>
-                    <strong>Weather Summary: </strong><span id="current-summary">Sunshine</span><br>
-                    <strong>Current Temperature: </strong><span id="current-temperature">25</span><br>
-                </div>
-            </div>
+        <div class="location-info-container">
+          <span class="location-temperature"></span>
+          <span class="weather-summary"></span>
+          <span class="location"></span>
         </div>
-
     </div>
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -43,4 +35,5 @@
     <script src="//cdn.leafletjs.com/leaflet/v1.0.0-rc.1/leaflet.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
+
 </html>
