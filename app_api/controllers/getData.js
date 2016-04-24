@@ -54,7 +54,9 @@ function processData(data) {
   var returnData = {
     summary: data.weatherData.currently.summary,
     temperature: data.weatherData.currently.temperature,
-    daySummary: data.weatherData.daily.data[0]
+    daySummary: data.weatherData.daily.data[0],
+    day2Summary: data.weatherData.daily.data[1],
+    day3Summary: data.weatherData.daily.data[2],
   };
 
   for (var i = 0; i < locationDataLen; i++) {

@@ -68,17 +68,48 @@
         var latlng = e.latlng;
         getWeatherDataBy(latlng.lat, latlng.lng, function(data) {
           console.log(data);
-          var pop1 = '<div class="click-info-container"><div class="animation"></div><strong>City: </strong><span>';
-          var pop15= '</span><br><strong>Neighborhood: </strong><span>';
-          var pop2 = '</span><br><strong>Weather: </strong><span>';
-          var pop3 = '</span><br><strong>Tempurature: </strong><span>';
-          var pop4 = '&deg;</span><br><strong>Max Temp: </strong><span>';
-          var pop5 = '&deg;</span><br><strong>Min Temp: </strong><span>';
-          var pop6 = '&deg;</span></div>';
-          var popupTemplate = pop1 + (data.city || 'Unknown') + pop15 + (data.neighborhood || 'Unkown') + pop2 + data.summary + pop3 + data.temperature + pop4 + data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
-                // console.log(popupTemplate);
-          var popup = L.popup().setLatLng(latlng).setContent(popupTemplate).openOn(map);
-          animations.partlyCloudy();
+          // var pop1 = '<div class="click-info-container"><div class="animation"></div><strong>City: </strong><span>';
+          // var pop15= '</span><br><strong>Neighborhood: </strong><span>';
+          // var pop2 = '</span><br><strong>Weather: </strong><span>';
+          // var pop3 = '</span><br><strong>Tempurature: </strong><span>';
+          // var pop4 = '&deg;</span><br><strong>Max Temp: </strong><span>';
+          // var pop5 = '&deg;</span><br><strong>Min Temp: </strong><span>';
+          // var pop6 = '&deg;</span></div>';
+          // var popupTemplate = pop1 + (data.city || 'Unknown') + pop15 + (data.neighborhood || 'Unkown') + pop2 + data.summary + pop3 + data.temperature + pop4 + data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
+          //       // console.log(popupTemplate);
+          var unitStr = (unit === 'american') ? '&deg;F' : '&deg;C';
+          var $template = $('<div></div>');
+          var $clickInfoContainer = $('<div class="click-info-container"></div>');
+          var $animation = $('<div class="animation"></div>');
+          var $info = $('<div class="info"></div>');
+          var $infoCurrentTemperature = $('<span class="info-current-temperature">' + parseInt(data.temperature) + unitStr + '</span>');
+          var $infoSummary = ('<div class="info-summary">' + data.summary + '</div>');
+          var $infoLocation = ('<div class="info-location">' + data.neighborhood + ', ' + data.city +'</div>');
+          var $infoUV = $('<div class="info-uv"><strong>UV&nbsp;</strong>0.00043</div>');
+          var $infoCO = $('<div class="info-co"><strong>CO&nbsp;</strong>0.4423</div>');
+          var $hr = $('<hr>');
+          $clickInfoContainer.append($animation);
+          $clickInfoContainer.append($info);
+          $clickInfoContainer.append($infoCurrentTemperature);
+          $clickInfoContainer.append($infoSummary);
+          $clickInfoContainer.append($infoLocation);
+          $clickInfoContainer.append($infoUV);
+          $clickInfoContainer.append($infoCO);
+          $clickInfoContainer.append($hr);
+          $template.append($clickInfoContainer);
+          // <span class="info-current-temperature">80</span>
+          // <div class="info-summary">Partly Cloudy</div>
+          // <div class="info-location">twin peaks, san francisco</div>
+          // <div class="info-uv"><strong>UV&nbsp;</strong>0.00043</div>
+          // <div class="info-co"><strong>CO&nbsp;</strong>0.4423</div>
+          // <hr>
+          // <dl class="info-dl dl-horizontal">
+          //   <dt>Max Temperature</dt><dd class="info-max-temperature">89</dd>
+          //   <dt>Min Temperature</dt><dd class="info-max-temperature">65</dd>
+          // </dl>
+          // <div class="day-summary">Partly cloudy starting in the afternoon.</div>
+          var popup = L.popup().setLatLng(latlng).setContent($template.html()).openOn(map);
+          animations.partlyCloudyNight();
         });
       });
     }
@@ -118,6 +149,6 @@
       $target.addClass('btn-info');
       changeLayer($target.data('layer'));
     });
-    
+
     $('document').ready(start());
 } ($, L, new Animations()));

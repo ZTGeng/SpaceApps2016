@@ -1,4 +1,4 @@
-var defaultDurition = 1000;
+var defaultDurition = 2000;
 var Animations = function() {
     this.clear = function () {
         var $sun = $('<img src="/images/weather_images/sun.png">');
@@ -11,7 +11,7 @@ var Animations = function() {
             height: "100px",
             opacity: 0
         }).animate({
-            top: "-50px",
+            top: "-70px",
             opacity: 1
         }, defaultDurition);
     };
@@ -19,14 +19,14 @@ var Animations = function() {
         var $moon = $('<img src="/images/weather_images/moon.png">');
         $('.animation').append($moon);
         $moon.css({
-            position: "absolute",
-            top: "-100px",
-            left: "125px",
-            width: "100px",
-            height: "100px",
-            opacity: 0
+          position: "absolute",
+          top: "-100px",
+          left: "125px",
+          width: "100px",
+          height: "100px",
+          opacity: 0
         }).animate({
-            top: "-50px",
+            top: "-70px",
             opacity: 1
         }, defaultDurition);
     };
@@ -61,25 +61,25 @@ var Animations = function() {
         }, defaultDurition);
         $cloud2.css({
             top: "-20px",
-            left: "50px",
+            left: "-20px",
             width: "170px",
             height: "70px",
         }).animate({
-            left: "70px",
+            left: "0",
             opacity: 1
         }, defaultDurition);
         $cloud3.css({
-            top: "-50px",
-            left: "175px",
+            top: "0",
+            left: "30px",
             width: "170px",
             height: "80px",
         }).animate({
-            left: "155px",
+            left: "90px",
             opacity: 1
         }, defaultDurition);
         $cloud4.css({
             top: "-20px",
-            left: "200px",
+            left: "90px",
             width: "150px",
             height: "65px",
         }).animate({
@@ -88,25 +88,16 @@ var Animations = function() {
         }, defaultDurition);
     };
     this.cloudyNight = function () {
-        var $moon = $('<img class="anime-obj" src="/images/weather_images/moon.png">');
         var $cloud1 = $('<img class="anime-obj" src="/images/weather_images/dark_cloud_night_1.png">');
         var $cloud2 = $('<img class="anime-obj" src="/images/weather_images/dark_cloud_night_2.png">');
         var $cloud3 = $('<img class="anime-obj" src="/images/weather_images/dark_cloud_night_3.png">');
         var $cloud4 = $('<img class="anime-obj" src="/images/weather_images/dark_cloud_night_4.png">');
-        $('.animation').append($moon, $cloud1, $cloud2, $cloud3, $cloud4);
+        $('.animation').append($cloud1, $cloud2, $cloud3, $cloud4);
         $('.anime-obj').css({
             position: "absolute",
             opacity: 0,
         });
-        $moon.css({
-            top: "-100px",
-            left: "125px",
-            width: "100px",
-            height: "100px"
-        }).animate({
-            top: "-50px",
-            opacity: 1
-        }, defaultDurition);
+
         $cloud1.css({
             top: "-50px",
             left: "100px",
@@ -118,25 +109,25 @@ var Animations = function() {
         }, defaultDurition);
         $cloud2.css({
             top: "-20px",
-            left: "50px",
+            left: "-20px",
             width: "170px",
             height: "70px",
         }).animate({
-            left: "70px",
+            left: "0",
             opacity: 1
         }, defaultDurition);
         $cloud3.css({
-            top: "-50px",
-            left: "175px",
+            top: "0",
+            left: "30px",
             width: "170px",
             height: "80px",
         }).animate({
-            left: "155px",
+            left: "90px",
             opacity: 1
         }, defaultDurition);
         $cloud4.css({
             top: "-20px",
-            left: "200px",
+            left: "90px",
             width: "150px",
             height: "65px",
         }).animate({
