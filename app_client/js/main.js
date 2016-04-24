@@ -60,19 +60,21 @@ function creatMap(lat, lng) {
         // console.log(e.latlng);
         // console.log(e);
         // var point = e.containerPoint;
-        getWeatherData(lat, lng, this, e);
+        console.log(this);
+        getWeatherData(e, this);
     });
 };
 
-function getWeatherData(lat, lng, map, e) {
-    console.log("eqwewq");
+function getWeatherData(e, map) {
+    
     $.ajax({
         method: 'GET',
-        url: '/api/getData?lat=' + lat + '&lng=' + lng
+        url: '/api/getData?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng
     }).done(function(data, e) {
-            console.log("aasdad");
+        console.log(e);
             var popupTemplate = pop1 + data.city + pop2 + data.summary + pop3 + data.temperature + pop4 +
                                 data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
+            console.log(popupTemplate);
             var popup = L.popup()
                 .setLatLng(e.latlng)
                 .setContent(popupTemplate)
