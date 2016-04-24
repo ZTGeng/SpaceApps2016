@@ -3,24 +3,16 @@ var Request = require('request');
 // var Stringify = require('json-stringify-safe');
 
 var _showError = function(req, res, statusCode) {
-
+  res.status(statusCode);
+  res.json({ message: 'Error retriving data!'});
 };
 
 var sendJsonResponse = function(res, status, content) {
-  // var returnData = {};
-  // returnData.city = 'DummyCityNotFinished';
-  // returnData.summary =
-  var returnData = {
-    city: 'Dummy',
-    summary: content.currently.summary,
-    temperature: content.currently.temperature,
-    daySummary: content.daily.data[0]
-  };
   res.status(status);
-  res.json(returnData);
+  res.json(content);
 };
 
-function getDataFromOutApi(req, res, callback) {
+function getWeatherDataFromOutApi(req, res, callback) {
   var requestOptions = {};
   var lng = req.query.lng;
   var lat = req.query.lat;
@@ -37,8 +29,53 @@ function getDataFromOutApi(req, res, callback) {
   });
 }
 
+function getLocationInfoFromOutApi(req, res, callback) {
+  var requestOptions = {};
+  var lng = req.query.lng;
+  var lat = req.query.lat;
+
+  requestOptions.url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng;
+  requestOptions.method = 'GET';
+  Request(requestOptions, function(err, response, body) {
+    if (response.statusCode === 200) {
+      var data = JSON.parse(body);
+      console.log(data);
+      callback(req, res, data);
+    } else {
+      _showError(req, res, response.statusCode);
+    }
+  });
+}
+
+function processData(data) {
+  // console.log(data);
+  var locationDataLen = data.locationData.results.length;
+  var locationData = data.locationData.results;
+  var returnData = {
+    summary: data.weatherData.currently.summary,
+    temperature: data.weatherData.currently.temperature,
+    daySummary: data.weatherData.daily.data[0]
+  };
+
+  for (var i = 0; i < locationDataLen; i++) {
+    if (locationData[i].types.toString() === 'locality,political') {
+      returnData.city = locationData[i].address_components[0].long_name;
+    } else if (locationData[i].types.toString() === 'neighborhood,political') {
+      returnData.neighborhood = locationData[i].address_components[0].long_name;
+    }
+  }
+
+  return returnData;
+}
+
 module.exports.getWeatherDataByGeo = function(req, res, next) {
-  getDataFromOutApi(req, res, function(req, res, responseData) {
-    sendJsonResponse(res, 200, responseData);
+  getWeatherDataFromOutApi(req, res, function(req, res, weatherData) {
+    getLocationInfoFromOutApi(req, res, function(req, res, locationData) {
+      var returnData = processData({
+        weatherData: weatherData,
+        locationData: locationData
+      });
+      sendJsonResponse(res, 200, returnData);
+    });
   });
 };
