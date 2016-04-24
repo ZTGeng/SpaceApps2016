@@ -144,14 +144,14 @@ var Animations = function() {
         this.cloudyNight();
     };
     this.rain = function() {
-        this.cloudy();
         $rain = $('<div class="rain-animation"></div>');
         $('.animation').append($rain);
+        this.cloudy();
     };
     this.rainNight = function() {
-        this.cloudyNight();
         $rain = $('<div class="rain-animation"></div>');
         $('.animation').append($rain);
+        this.cloudyNight();
     };
     this.snow = function() {
         this.cloudy();

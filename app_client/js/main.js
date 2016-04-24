@@ -1,5 +1,7 @@
 (function ($, L, animations) {
     'use strict';
+    
+    var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"];
     // Get the user's API key via prompt
     if (!localStorage.getItem('uc_api_key') || localStorage.getItem('uc_api_key') == "null") {
       localStorage.setItem('uc_api_key', "357C908148B64CD19F08");
@@ -68,6 +70,7 @@
         var latlng = e.latlng;
         getWeatherDataBy(latlng.lat, latlng.lng, function(data) {
           console.log(data);
+          var dayNum = (new Date()).getDay();
           // var pop1 = '<div class="click-info-container"><div class="animation"></div><strong>City: </strong><span>';
           // var pop15= '</span><br><strong>Neighborhood: </strong><span>';
           // var pop2 = '</span><br><strong>Weather: </strong><span>';
@@ -88,7 +91,7 @@
           var $infoUV = $('<div class="info-uv"><strong>UV&nbsp;</strong>0.00043</div>');
           var $infoCO = $('<div class="info-co"><strong>CO&nbsp;</strong>0.4423</div>');
           var $hr = $('<hr>');
-          var $tab = $('<div class="tab-content"><div role="tabpanel" class="tab-pane active" id="today"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.todayMax + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.todayMin + '</dd></dl><div class="day-summary">' + data.todaySummary + '</div></div><div role="tabpanel" class="tab-pane" id="day2"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.day2Max + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.day2Min + '</dd></dl><div class="day-summary">' + data.day2Summary + '</div></div><div role="tabpanel" class="tab-pane" id="day3"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.day3Max + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.day3Min + '</dd></dl><div class="day-summary">' + data.day3Summary + '</div></div></div><ul class="nav nav-tabs" role="tablist"><li role="presentation" class="active"><a href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li><li role="presentation"><a href="#day2" aria-controls="day2" role="tab" data-toggle="tab" id="day2-tab">Day2</a></li><li role="presentation"><a href="#day3" aria-controls="day3" role="tab" data-toggle="tab" id="day3-tab">Day3</a></li></ul>');
+          var $tab = $('<div class="tab-content"><div role="tabpanel" class="tab-pane active" id="today"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.todayMax + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.todayMin + '</dd></dl><div class="day-summary">' + data.todaySummary + '</div></div><div role="tabpanel" class="tab-pane" id="day2"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.day2Max + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.day2Min + '</dd></dl><div class="day-summary">' + data.day2Summary + '</div></div><div role="tabpanel" class="tab-pane" id="day3"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.day3Max + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.day3Min + '</dd></dl><div class="day-summary">' + data.day3Summary + '</div></div></div><ul class="nav nav-tabs" role="tablist"><li role="presentation" class="active"><a href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li><li role="presentation"><a href="#day2" aria-controls="day2" role="tab" data-toggle="tab" id="day2-tab">' + weekdays[(dayNum + 1) % 7] + '</a></li><li role="presentation"><a href="#day3" aria-controls="day3" role="tab" data-toggle="tab" id="day3-tab">' + weekdays[(dayNum + 2) % 7] + '</a></li></ul>');
           $clickInfoContainer.append($animation);
 
           $info.append($infoCurrentTemperature);

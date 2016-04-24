@@ -141,3 +141,93 @@ body {
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
   background-color: #DDD;
 }
+
+@keyframes raining {
+		0% {
+			background-position: 0px 0px;
+		}
+		100% {
+			background-position: 0px 200px;
+		}
+	}
+
+	@-o-keyframes raining {
+		0% {
+			background-position: 0px 0px;
+		}
+		100% {
+			background-position: 0px 200px;
+		}
+	}
+
+	@-ms-keyframes raining {
+		0% {
+			background-position: 0px 0px;
+		}
+		100% {
+			background-position: 0px 200px;
+		}
+	}
+
+	@-moz-keyframes raining {
+		0% {
+			background-position: 0px 0px;
+		}
+		100% {
+			background-position: 0px 200px;
+		}
+	}
+
+	@-webkit-keyframes raining {
+		0% {
+			background-position: 0px 0px;
+		}
+		100% {
+			background-position: 0px 200px;
+		}
+	}
+.rain-animation {
+  background: url('/images/weather_images/rain_day.png') center center;
+  background-size: cover;
+  width: 300px;
+  height: 80px;
+  position: absolute;
+  top: 0;
+  left: 25px;
+  /*z-index: 999;*/
+  animation: raining 1s linear 0s infinite normal;
+  -o-animation: raining 1s linear 0s infinite normal;
+  -ms-animation: raining 1s linear 0s infinite normal;
+  -moz-animation: raining 1s linear 0s infinite normal;
+  -webkit-animation: raining 1s linear 0s infinite normal;
+}
+.big-snow-animation {
+  background: url('/images/weather_images/rain_day.png') center center;
+  background-size: cover;
+  width: 300px;
+  height: 80px;
+  position: absolute;
+  top: 0;
+  left: 25px;
+  /*z-index: 999;*/
+  animation: raining 1s linear 0s infinite normal;
+  -o-animation: raining 1s linear 0s infinite normal;
+  -ms-animation: raining 1s linear 0s infinite normal;
+  -moz-animation: raining 1s linear 0s infinite normal;
+  -webkit-animation: raining 1s linear 0s infinite normal;
+}
+.small-snow-animation {
+  background: url('/images/weather_images/rain_day.png') center center;
+  background-size: cover;
+  width: 300px;
+  height: 80px;
+  position: absolute;
+  top: 0;
+  left: 25px;
+  /*z-index: 999;*/
+  animation: raining 1s linear 0s infinite normal;
+  -o-animation: raining 1s linear 0s infinite normal;
+  -ms-animation: raining 1s linear 0s infinite normal;
+  -moz-animation: raining 1s linear 0s infinite normal;
+  -webkit-animation: raining 1s linear 0s infinite normal;
+}
