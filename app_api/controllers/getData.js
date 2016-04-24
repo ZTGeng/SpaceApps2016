@@ -54,9 +54,18 @@ function processData(data) {
   var returnData = {
     summary: data.weatherData.currently.summary,
     temperature: data.weatherData.currently.temperature,
-    daySummary: data.weatherData.daily.data[0],
-    day2Summary: data.weatherData.daily.data[1],
-    day3Summary: data.weatherData.daily.data[2],
+    
+    todaySummary: data.weatherData.daily.data[0].summary,
+    todayMax: data.weatherData.daily.data[0].temperatureMax,
+    todayMin: data.weatherData.daily.data[0].temperatureMin,
+    
+    day2Summary: data.weatherData.daily.data[1].summary,
+    day2Max: data.weatherData.daily.data[1].temperatureMax,
+    day2Min: data.weatherData.daily.data[1].temperatureMin,
+    
+    day3Summary: data.weatherData.daily.data[2].summary,
+    day3Max: data.weatherData.daily.data[2].temperatureMax,
+    day3Min: data.weatherData.daily.data[2].temperatureMin
   };
 
   for (var i = 0; i < locationDataLen; i++) {
