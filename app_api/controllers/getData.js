@@ -27,7 +27,6 @@ function getDataFromOutApi(req, res, callback) {
 
   requestOptions.url = 'https://api.forecast.io/forecast/' + api_key + '/' + lat + ',' + lng;
   requestOptions.method = 'GET';
-  console.log(requestOptions);
   Request(requestOptions, function(err, response, body) {
     if (response.statusCode === 200) {
       var data = JSON.parse(body);
@@ -39,7 +38,6 @@ function getDataFromOutApi(req, res, callback) {
 }
 
 module.exports.getWeatherDataByGeo = function(req, res, next) {
-  console.log("api call");
   getDataFromOutApi(req, res, function(req, res, responseData) {
     sendJsonResponse(res, 200, responseData);
   });
