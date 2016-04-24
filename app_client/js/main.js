@@ -88,15 +88,20 @@
           var $infoUV = $('<div class="info-uv"><strong>UV&nbsp;</strong>0.00043</div>');
           var $infoCO = $('<div class="info-co"><strong>CO&nbsp;</strong>0.4423</div>');
           var $hr = $('<hr>');
+          var $tab = $('<div class="tab-content"><div role="tabpanel" class="tab-pane active" id="today"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.todayMax + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.todayMin + '</dd></dl><div class="day-summary">' + data.todaySummary + '</div></div><div role="tabpanel" class="tab-pane" id="day2"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.day2Max + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.day2Min + '</dd></dl><div class="day-summary">' + data.day2Summary + '</div></div><div role="tabpanel" class="tab-pane" id="day3"><dl class="info-dl dl-horizontal"><dt>Max Temperature</dt><dd class="info-max-temperature">' + data.day3Max + '</dd><dt>Min Temperature</dt><dd class="info-min-temperature">' + data.day3Min + '</dd></dl><div class="day-summary">' + data.day3Summary + '</div></div></div><ul class="nav nav-tabs" role="tablist"><li role="presentation" class="active"><a href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li><li role="presentation"><a href="#day2" aria-controls="day2" role="tab" data-toggle="tab" id="day2-tab">Day2</a></li><li role="presentation"><a href="#day3" aria-controls="day3" role="tab" data-toggle="tab" id="day3-tab">Day3</a></li></ul>');
           $clickInfoContainer.append($animation);
+
+          $info.append($infoCurrentTemperature);
+          $info.append($infoSummary);
+          $info.append($infoLocation);
+          $info.append($infoUV);
+          $info.append($infoCO);
           $clickInfoContainer.append($info);
-          $clickInfoContainer.append($infoCurrentTemperature);
-          $clickInfoContainer.append($infoSummary);
-          $clickInfoContainer.append($infoLocation);
-          $clickInfoContainer.append($infoUV);
-          $clickInfoContainer.append($infoCO);
           $clickInfoContainer.append($hr);
+
+          $clickInfoContainer.append($tab);
           $template.append($clickInfoContainer);
+
           // <span class="info-current-temperature">80</span>
           // <div class="info-summary">Partly Cloudy</div>
           // <div class="info-location">twin peaks, san francisco</div>

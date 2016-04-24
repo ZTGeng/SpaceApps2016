@@ -90,6 +90,9 @@ body {
   text-align: left;
   line-height: 120%;
 }
+.info-location {
+  font-size: 0.7em;
+}
 .info hr {
   margin: 5px 0;
 }
@@ -97,13 +100,44 @@ body {
   font-size: 0.8em;
   margin-bottom: 0;
 }
-.info dt {
+.info-dl dt {
   width: 50%;
   text-align: left;
 }
-.info dd {
+.info-dl dd {
   margin-left: 22%;
 }
-.info .day-summary {
+.day-summary {
+  font-size: 0.7em;
+  width: 261px;
+  overflow: hidden;
+}
+.info-uv, .info-co {
   font-size: 0.8em;
+}
+.nav-tabs {
+  border: none;
+  margin-left: 56px;
+  margin-top: 15px;
+}
+.nav-tabs > li > a {
+  border: 1px solid #DDD;
+  border-radius: 0;
+  margin-right: 0;
+}
+.nav-tabs > li:first-child > a {
+  border-radius: 4px 0 0 4px;
+  border: 1px solid #DDD;
+}
+.nav-tabs > li:last-child > a {
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #DDD;
+}
+.nav > li > a {
+  font-size: 0.6em;
+  padding: 5px 10px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+  background-color: #DDD;
 }
