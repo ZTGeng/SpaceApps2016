@@ -54,6 +54,7 @@ function processData(data) {
   var returnData = {
     summary: data.weatherData.currently.summary,
     temperature: data.weatherData.currently.temperature,
+    time: (parseInt(data.weatherData.offset) + (new Date(data.weatherData.currently.time)).getHours() + 11) % 24,
     
     todaySummary: data.weatherData.daily.data[0].summary,
     todayMax: data.weatherData.daily.data[0].temperatureMax,

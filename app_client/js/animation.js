@@ -31,7 +31,6 @@ var Animations = function() {
         }, defaultDurition);
     };
     this.cloudy = function () {
-        // var $sun = $('<img class="anime-obj" src="/images/weather_images/sun.png">');
         var $cloud1 = $('<img class="anime-obj" src="/images/weather_images/white_cloud_day_1.png">');
         var $cloud2 = $('<img class="anime-obj" src="/images/weather_images/white_cloud_day_2.png">');
         var $cloud3 = $('<img class="anime-obj" src="/images/weather_images/white_cloud_day_3.png">');
@@ -41,15 +40,6 @@ var Animations = function() {
             position: "absolute",
             opacity: 0,
         });
-        // $sun.css({
-        //     top: "-100px",
-        //     left: "125px",
-        //     width: "100px",
-        //     height: "100px"
-        // }).animate({
-        //     top: "-50px",
-        //     opacity: 1
-        // }, defaultDurition);
         $cloud1.css({
             top: "-50px",
             left: "100px",

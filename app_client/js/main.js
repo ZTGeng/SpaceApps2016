@@ -2,6 +2,22 @@
     'use strict';
     
     var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"];
+    var animationFunctions = {
+      day: {
+        "Clear": animations.clear,
+        "Partly Cloudy": animations.partlyCloudy,
+        "Cloudy": animations.cloudy,
+        "Rain": animations.rain,
+        "Snow": animations.snow
+      },
+      night: {
+        "Clear": animations.clearNight,
+        "Partly Cloudy": animations.partlyCloudyNight,
+        "Cloudy": animations.cloudyNight,
+        "Rain": animations.rainNight,
+        "Snow": animations.snowNight
+      }
+    };
     // Get the user's API key via prompt
     if (!localStorage.getItem('uc_api_key') || localStorage.getItem('uc_api_key') == "null") {
       localStorage.setItem('uc_api_key', "357C908148B64CD19F08");
@@ -14,22 +30,22 @@
         googleLayers = {
           streets: L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             maxZoom: 20,
-            minZoom: 10,
+            minZoom: 5,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           }),
           hybrid: L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
             maxZoom: 20,
-            minZoom: 10,
+            minZoom: 5,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           }),
           satellite: L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
             maxZoom: 20,
-            minZoom: 10,
+            minZoom: 5,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           }),
           terrain: L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
             maxZoom: 20,
-            minZoom: 10,
+            minZoom: 5,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
           })
         },
@@ -69,17 +85,9 @@
       map.on('click', function (e) {
         var latlng = e.latlng;
         getWeatherDataBy(latlng.lat, latlng.lng, function(data) {
-          console.log(data);
+          // console.log(data);
           var dayNum = (new Date()).getDay();
-          // var pop1 = '<div class="click-info-container"><div class="animation"></div><strong>City: </strong><span>';
-          // var pop15= '</span><br><strong>Neighborhood: </strong><span>';
-          // var pop2 = '</span><br><strong>Weather: </strong><span>';
-          // var pop3 = '</span><br><strong>Tempurature: </strong><span>';
-          // var pop4 = '&deg;</span><br><strong>Max Temp: </strong><span>';
-          // var pop5 = '&deg;</span><br><strong>Min Temp: </strong><span>';
-          // var pop6 = '&deg;</span></div>';
-          // var popupTemplate = pop1 + (data.city || 'Unknown') + pop15 + (data.neighborhood || 'Unkown') + pop2 + data.summary + pop3 + data.temperature + pop4 + data.daySummary.temperatureMax + pop5 + data.daySummary.temperatureMin + pop6;
-          //       // console.log(popupTemplate);
+          var hourNum = data.time;
           var unitStr = (unit === 'american') ? '&deg;F' : '&deg;C';
           var $template = $('<div></div>');
           var $clickInfoContainer = $('<div class="click-info-container"></div>');
@@ -87,7 +95,7 @@
           var $info = $('<div class="info"></div>');
           var $infoCurrentTemperature = $('<span class="info-current-temperature">' + parseInt(data.temperature) + unitStr + '</span>');
           var $infoSummary = ('<div class="info-summary">' + data.summary + '</div>');
-          var $infoLocation = ('<div class="info-location">' + data.neighborhood + ', ' + data.city +'</div>');
+          var $infoLocation = ('<div class="info-location">' + (data.neighborhood ? data.neighborhood + ', ' : '') + (data.city || 'Unknown') +'</div>');
           var $infoUV = $('<div class="info-uv"><strong>UV&nbsp;</strong>0.00043</div>');
           var $infoCO = $('<div class="info-co"><strong>CO&nbsp;</strong>0.4423</div>');
           var $hr = $('<hr>');
@@ -105,19 +113,9 @@
           $clickInfoContainer.append($tab);
           $template.append($clickInfoContainer);
 
-          // <span class="info-current-temperature">80</span>
-          // <div class="info-summary">Partly Cloudy</div>
-          // <div class="info-location">twin peaks, san francisco</div>
-          // <div class="info-uv"><strong>UV&nbsp;</strong>0.00043</div>
-          // <div class="info-co"><strong>CO&nbsp;</strong>0.4423</div>
-          // <hr>
-          // <dl class="info-dl dl-horizontal">
-          //   <dt>Max Temperature</dt><dd class="info-max-temperature">89</dd>
-          //   <dt>Min Temperature</dt><dd class="info-max-temperature">65</dd>
-          // </dl>
-          // <div class="day-summary">Partly cloudy starting in the afternoon.</div>
           var popup = L.popup().setLatLng(latlng).setContent($template.html()).openOn(map);
-          animations.partlyCloudyNight();
+          
+          animationFunctions[hourNum > 18 || hourNum < 7 ? "night" : "day"][data.summary].bind(animations)();
         });
       });
     }
